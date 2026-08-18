@@ -1,0 +1,762 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GH-300 GitHub Copilot Fundamentals — Trainer & Learner Handbook | RR Skillverse</title>
+<meta name="description" content="GH-300 GitHub Copilot Fundamentals hands-on handbook by Raushan Ranjan and RR Skillverse. Covers Responsible AI, Copilot, prompting, advanced features, SDLC, testing, CLI, documentation, PRs, management and developer use cases.">
+<style>
+:root{--bg:#f5f7fb;--card:#fff;--ink:#172033;--muted:#667085;--line:#dfe5ef;--a:#6546e8;--b:#087ea4;--g:#16803c;--w:#b45309;--dark:#0d1424;--soft:#f0ecff}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.65 Segoe UI,Arial,sans-serif}
+header{background:linear-gradient(135deg,#17122f,#382277,#086a88);color:#fff;padding:52px 7vw}
+header h1{font-size:42px;line-height:1.08;margin:12px 0}
+header h2{font-weight:400;color:#e8eefc;font-size:20px;max-width:1000px}
+header p{max-width:1050px;color:#e8eefc}
+.badge{display:inline-block;background:#ffffff22;border:1px solid #ffffff44;padding:6px 11px;border-radius:999px;font-size:12px;font-weight:800}
+nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);padding:10px 5vw;display:flex;gap:7px;flex-wrap:wrap}
+nav a{background:var(--soft);color:#3d269b;padding:7px 10px;border-radius:9px;text-decoration:none;font-weight:800;font-size:12px}
+main{max-width:1320px;margin:28px auto;padding:0 22px}
+section{margin:38px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:15px 0;box-shadow:0 5px 18px #16233b0b}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+h2{font-size:30px;line-height:1.2}
+h3{font-size:20px;color:#3d269b;margin-top:8px}
+h4{margin-bottom:6px}
+.say{border-left:5px solid var(--b);background:#effbfe}
+.prompt{border-left:5px solid var(--a);background:#f5f2ff}
+.check{border-left:5px solid var(--g);background:#effaf2}
+.warn{border-left:5px solid var(--w);background:#fff7ed}
+.info{border-left:5px solid #667085;background:#f7f8fa}
+pre{background:var(--dark);color:#e8eefc;padding:16px;border-radius:11px;overflow:auto;white-space:pre-wrap;word-break:break-word}
+code{font-family:Consolas,Monaco,monospace}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--soft);color:#3d269b}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:14px 0}
+.flow span{background:#fff;border:1px solid var(--line);padding:7px 11px;border-radius:9px;font-weight:800}
+.flow b{color:var(--a)}
+.step{border-left:4px solid var(--a);padding-left:16px;margin:26px 0}
+.tag{display:inline-block;background:#eee9ff;color:#3d269b;border-radius:999px;padding:3px 8px;font-size:11px;font-weight:800}
+.small{color:var(--muted);font-size:13px}
+.kpi{font-size:28px;font-weight:800;color:var(--a)}
+a{color:#3d269b}
+footer{background:#111827;color:#cbd5e1;padding:36px 7vw;margin-top:55px}
+footer a{color:#cbd5e1}
+@media(max-width:800px){.two{grid-template-columns:1fr}header h1{font-size:33px}}
+</style>
+</head>
+
+<body>
+<header>
+<span class="badge">RR Skillverse Notes · By Raushan Ranjan, MCT</span>
+<h1>GH-300: GitHub Copilot Fundamentals</h1>
+<h2>A practical developer handbook for understanding Copilot, using it effectively, and applying it throughout the software development lifecycle.</h2>
+<p><b>Learn the idea → see the analogy → paste the prompt → inspect the result → test it → improve it → document it → review it.</b></p>
+<p>This handbook is designed to work both as a trainer's live-demo guide and as a public post-training learning reference.</p>
+</header>
+
+<nav>
+<a href="#curriculum">Curriculum</a>
+<a href="#rai">Responsible AI</a>
+<a href="#copilot">Copilot</a>
+<a href="#prompt">Prompting</a>
+<a href="#advanced">Advanced</a>
+<a href="#environments">Environments</a>
+<a href="#management">Management</a>
+<a href="#sdlc">SDLC</a>
+<a href="#hands-on">Hands-on</a>
+<a href="#testing">Testing</a>
+<a href="#tokens">Tokens</a>
+<a href="#pr">Docs & PR</a>
+<a href="#links">Official Learn</a>
+</nav>
+
+<main>
+
+<section id="welcome">
+<h2>Welcome</h2>
+<div class="card say">
+<p>GitHub Copilot becomes much easier to understand when you stop thinking of it as a single “code generator”. It is better understood as an <b>AI pair programmer</b> that can participate in many different activities: understanding a repository, writing code, explaining code, generating tests, fixing failures, documenting changes, helping with terminal commands, reviewing pull requests and supporting developers across the SDLC.</p>
+<p>The purpose of this handbook is therefore not to memorize buttons. It is to understand <b>which Copilot capability to use for which developer problem</b>.</p>
+</div>
+<div class="card">
+<h3>The core mental model</h3>
+<div class="flow">
+<span>Ask</span><b>→</b><span>Plan</span><b>→</b><span>Build</span><b>→</b><span>Test</span><b>→</b><span>Fix</span><b>→</b><span>Document</span><b>→</b><span>Review</span><b>→</b><span>Ship</span>
+</div>
+<p><b>Copilot accelerates the work. The developer remains responsible for deciding what should be built and verifying what was produced.</b></p>
+</div>
+</section>
+
+<section id="curriculum">
+<h2>1. GH-300 Curriculum at a Glance</h2>
+<div class="card info">
+<p>The course structure used in this handbook is organized into <b>two learning paths with six modules each</b>. The official Microsoft Learn pages are linked throughout this handbook so learners can continue with the current self-paced material and assessments.</p>
+</div>
+
+<h3>Learning Path 1 — GitHub Copilot Fundamentals Part 1 of 2</h3>
+<table>
+<tr><th>Module</th><th>Topic</th><th>What learners should understand</th><th>Practical anchor</th></tr>
+<tr><td>1</td><td>Responsible AI with GitHub Copilot</td><td>AI risks, responsible use and the six responsible-AI principles.</td><td>Challenge an AI-generated recommendation and identify risk.</td></tr>
+<tr><td>2</td><td>Introduction to GitHub Copilot</td><td>What Copilot is, how suggestions work, interaction modes, setup and troubleshooting.</td><td>Ghost text, Chat and first code suggestion.</td></tr>
+<tr><td>3</td><td>Introduction to prompt engineering with GitHub Copilot</td><td>How prompts influence output, context, data flow and LLM behaviour.</td><td>Weak prompt → refined prompt → controlled output.</td></tr>
+<tr><td>4</td><td>Using advanced GitHub Copilot features</td><td>Chat, slash commands, agents, Inline Chat and project-aware interactions.</td><td><code>/tests</code>, <code>/fix</code>, <code>/docs</code>, <code>@workspace</code>.</td></tr>
+<tr><td>5</td><td>GitHub Copilot Across Environments: IDE, Chat, GitHub.com and Command Line</td><td>Use Copilot where the developer works: editor, Chat, GitHub.com and terminal.</td><td>IDE → GitHub → CLI workflow.</td></tr>
+<tr><td>6</td><td>Management and customization considerations</td><td>Plans, privacy, policies, content exclusions, public-code matching and troubleshooting.</td><td>Organization governance scenario.</td></tr>
+</table>
+
+<h3>Learning Path 2 — GitHub Copilot Fundamentals Part 2 of 2</h3>
+<table>
+<tr><th>Module</th><th>Topic</th><th>What learners should understand</th><th>Practical anchor</th></tr>
+<tr><td>7</td><td>Developer use cases for AI with GitHub Copilot</td><td>How Copilot supports productivity and different stages of the SDLC, plus limitations and measurement.</td><td>Map Copilot capabilities to a real SDLC.</td></tr>
+<tr><td>8</td><td>Develop unit tests using GitHub Copilot tools</td><td>Generate tests, target edge cases and verify that tests actually run.</td><td>Generate → fail → fix → rerun.</td></tr>
+<tr><td>9</td><td>Introduction to GitHub Copilot Business</td><td>Business plan concepts, organizational use cases and enabling Copilot for teams.</td><td>Business vs individual scenario.</td></tr>
+<tr><td>10</td><td>Introduction to GitHub Copilot Enterprise</td><td>Enterprise capabilities, organization-wide integration and advanced collaboration.</td><td>Repository knowledge, PRs and organizational context.</td></tr>
+<tr><td>11</td><td>Using GitHub Copilot with JavaScript</td><td>Apply Copilot to a JavaScript project using prompts and code suggestions.</td><td>Modify a JavaScript project.</td></tr>
+<tr><td>12</td><td>Using GitHub Copilot with Python</td><td>Apply Copilot to a Python project and API using prompts and live suggestions.</td><td>Modify a Python API.</td></tr>
+</table>
+
+<p class="small">The Microsoft Learn curriculum describes Part 1 and Part 2 as the core GH-300 learning paths; the attached course material used for this handbook presents six modules in each part. Current Microsoft Learn can evolve as Copilot features are updated, so learners should use the official links below for the latest module experience.</p>
+</section>
+
+<section id="rai">
+<h2>2. Responsible AI with GitHub Copilot</h2>
+<div class="card">
+<p>Responsible AI is the foundation of the course. Before asking “Can Copilot do this?”, a developer should also ask “<b>Should we do this, and how do we verify the result?</b>”</p>
+<div class="grid">
+<div class="card"><h3>Fairness</h3><p>Could the output systematically disadvantage a person or group?</p></div>
+<div class="card"><h3>Inclusiveness</h3><p>Does the solution work for different users, abilities and circumstances?</p></div>
+<div class="card"><h3>Reliability & Safety</h3><p>What happens when the model is wrong?</p></div>
+<div class="card"><h3>Privacy & Security</h3><p>What information is being provided, and could the generated solution introduce vulnerabilities?</p></div>
+<div class="card"><h3>Transparency</h3><p>Can people understand what the system is doing and why?</p></div>
+<div class="card"><h3>Accountability</h3><p>Who reviews and owns the final decision or code?</p></div>
+</div>
+</div>
+<div class="card say"><b>Analogy:</b> Copilot is like a brilliant junior developer. You appreciate the speed, but you still review their pull request.</div>
+<div class="card prompt"><h3>Mini demonstration</h3><pre><code>Evaluate this hypothetical employee-ranking approach.
+
+Rank employees using only short natural-language descriptions.
+Then identify:
+1. what information may be missing;
+2. where bias could enter;
+3. why the ranking may be unreliable;
+4. what a human reviewer should verify.
+
+Do not produce a final hiring decision.</code></pre></div>
+</section>
+
+<section id="copilot">
+<h2>3. Introduction to GitHub Copilot</h2>
+<div class="card">
+<h3>What is Copilot?</h3>
+<p>GitHub Copilot is an AI-powered coding assistant that can help developers generate, understand, refactor and debug code through inline suggestions and conversational interaction.</p>
+<p><b>Analogy:</b> Predictive text for developers — except the “next word” can become a complete function, test, explanation or implementation idea.</p>
+</div>
+<div class="two">
+<div class="card"><h3>Ghost text</h3><p>Start typing or describe intent in a comment. Copilot proposes code. <b>Tab accepts; ignore or undo when it is not right.</b></p></div>
+<div class="card"><h3>Chat</h3><p>Move from completion to conversation: explain, design, debug, compare, refactor or plan.</p></div>
+</div>
+<div class="card prompt"><h3>First live demo</h3><pre><code># Create a function that accepts a list of sales values
+# and returns the total, average, minimum and maximum.</code></pre><p>Pause. Let Copilot suggest the implementation. Accept it, then explain that the grey suggestion is a proposal—not automatically trustworthy code.</p></div>
+</section>
+
+<section id="prompt">
+<h2>4. Prompt Engineering — How Developers Talk to Copilot</h2>
+<p>A good prompt is not necessarily long. It is <b>clear, relevant, constrained and grounded in the task</b>.</p>
+<div class="card">
+<h3>The R-C-C-O pattern</h3>
+<div class="flow"><span>Role / Perspective</span><b>+</b><span>Context</span><b>+</b><span>Constraints</span><b>+</b><span>Output</span></div>
+<table>
+<tr><th>Element</th><th>Question</th><th>Example</th></tr>
+<tr><td>Role</td><td>Who should Copilot think like?</td><td>“Act as a senior C# reviewer.”</td></tr>
+<tr><td>Context</td><td>What does it need to know?</td><td>“Review the selected service and its unit tests.”</td></tr>
+<tr><td>Constraints</td><td>What must it not/change?</td><td>“Do not change the public API.”</td></tr>
+<tr><td>Output</td><td>What should come back?</td><td>“Return 5 findings with severity and recommendation.”</td></tr>
+</table>
+</div>
+<div class="two">
+<div class="card prompt"><h3>Weak</h3><pre><code>Fix this code.</code></pre></div>
+<div class="card check"><h3>Better</h3><pre><code>Review the selected function.
+
+Find the root cause of the failing validation.
+Do not change the public method signature.
+Explain the issue first.
+Then propose the smallest safe fix.
+Return the proposed change as a diff.</code></pre></div>
+</div>
+<div class="card">
+<h3>Prompt optimization principles</h3>
+<ul>
+<li>Give Copilot the <b>right context</b>, not all available context.</li>
+<li>State what should <b>not</b> change.</li>
+<li>Ask for a <b>plan before a large implementation</b>.</li>
+<li>Bound the output when you need a concise answer.</li>
+<li>Ask Copilot to distinguish <b>facts, assumptions and recommendations</b>.</li>
+<li>Use follow-up prompts instead of restarting from zero.</li>
+<li>For sensitive or high-impact work, explicitly ask for risks and verification steps.</li>
+</ul>
+</div>
+</section>
+
+<section id="advanced">
+<h2>5. Advanced GitHub Copilot Features</h2>
+<div class="card">
+<p>This is where Copilot starts feeling like a development partner rather than autocomplete.</p>
+<table>
+<tr><th>Feature</th><th>What it solves</th><th>Analogy</th></tr>
+<tr><td>Chat</td><td>Complex questions and multi-step reasoning.</td><td>Turn your chair and ask your teammate.</td></tr>
+<tr><td>Inline Chat</td><td>Focused changes without leaving the code.</td><td>Point at one paragraph and say “change this.”</td></tr>
+<tr><td>Slash commands</td><td>Common developer tasks with compact commands.</td><td>Keyboard shortcuts for standard jobs.</td></tr>
+<tr><td>Agents</td><td>Project-aware tasks that require context and multiple actions.</td><td>“Take this task and use the tools you need.”</td></tr>
+<tr><td>Context references</td><td>Ground the answer in a workspace, file or other relevant source.</td><td>Give your teammate the exact document.</td></tr>
+<tr><td>Ghost text</td><td>Fast completion while typing.</td><td>Predictive text for code.</td></tr>
+</table>
+</div>
+
+<div class="card prompt">
+<h3>Slash command discovery</h3>
+<p>Open Chat and type only:</p>
+<pre><code>/</code></pre>
+<p>Let the current menu show what your environment supports. Use the available command rather than memorizing a command that may have changed.</p>
+</div>
+
+<div class="grid">
+<div class="card"><h3><code>/explain</code></h3><p>Use it when you need to understand selected or active code.</p></div>
+<div class="card"><h3><code>/tests</code></h3><p>Use it when you need unit tests for selected code.</p></div>
+<div class="card"><h3><code>/fix</code></h3><p>Use it after identifying a bug or failure.</p></div>
+<div class="card"><h3><code>/docs</code></h3><p>Use it where your Copilot client exposes documentation assistance.</p></div>
+<div class="card"><h3><code>/compact</code></h3><p>Use the current compact/summarize capability when exposed after a long conversation.</p></div>
+<div class="card"><h3><code>@workspace</code></h3><p>Ask project-level questions using workspace context where supported.</p></div>
+</div>
+
+<div class="card check">
+<h3>The powerful combination</h3>
+<p><b>Inline Chat + slash command + context</b></p>
+<pre><code>Select the validation function → Inline Chat → /tests</code></pre>
+<p>This is the kind of quick trick developers should remember: individual features become much more useful when combined.</p>
+</div>
+</section>
+
+<section id="environments">
+<h2>6. Copilot Across Environments</h2>
+<div class="flow"><span>IDE</span><b>→</b><span>Chat</span><b>→</b><span>GitHub.com</span><b>→</b><span>CLI</span><b>→</b><span>PR</span></div>
+<div class="card">
+<h3>IDE</h3>
+<p>Best when you are actively writing or editing code. Use completion, Inline Chat, context and file-level assistance.</p>
+<h3>GitHub.com</h3>
+<p>Useful around repositories, issues, pull requests and collaborative review workflows.</p>
+<h3>CLI</h3>
+<p>Useful when the work itself lives in the terminal: commands, scripts, diagnostics and automation.</p>
+<h3>PR workflow</h3>
+<p>Useful when code is moving from “my branch” to “team-reviewed change”.</p>
+</div>
+<div class="card prompt"><h3>CLI safety demo</h3><pre><code>Explain the command I need to run to execute this project's tests.
+
+Do not execute anything.
+Explain:
+1. what the command does;
+2. what files it may read/change;
+3. what a successful result looks like.</code></pre></div>
+<p><b>Rule:</b> AI can suggest a command. The developer should understand the command before executing it.</p>
+</section>
+
+<section id="management">
+<h2>7. Management, Plans, Privacy & Customization</h2>
+<div class="card">
+<p>Copilot is not only a developer tool; in organizations it becomes a governed service. The important question changes from <b>“Can I use Copilot?”</b> to <b>“How should our organization use Copilot safely and consistently?”</b></p>
+</div>
+<table>
+<tr><th>Area</th><th>What to understand</th></tr>
+<tr><td>Plans</td><td>Individual and organizational offerings provide different capabilities and management controls.</td></tr>
+<tr><td>Policy management</td><td>Organizations can control access and selected Copilot capabilities.</td></tr>
+<tr><td>Content exclusions</td><td>Some files or directories may need to be excluded from Copilot analysis according to organizational policy.</td></tr>
+<tr><td>Public-code matching</td><td>Organizations can configure relevant controls around suggestions that match publicly available code.</td></tr>
+<tr><td>Privacy & data handling</td><td>Understand the applicable product, plan, settings and organizational policies before using sensitive information.</td></tr>
+<tr><td>Troubleshooting</td><td>Sign-in, extension, network, licensing, policy and environment configuration can all affect Copilot behaviour.</td></tr>
+</table>
+<div class="card say"><b>Analogy:</b> Content exclusion is like telling your assistant, “You can work in this office, but this locked room is out of bounds.”</div>
+</section>
+
+<section id="sdlc">
+<h2>8. Developer Use Cases: Copilot in the SDLC</h2>
+<div class="card">
+<p>This is the central idea that connects the whole course.</p>
+<div class="flow">
+<span>Requirement</span><b>→</b><span>Understand</span><b>→</b><span>Plan</span><b>→</b><span>Develop</span><b>→</b><span>Test</span><b>→</b><span>Debug</span><b>→</b><span>Document</span><b>→</b><span>Review</span><b>→</b><span>PR</span><b>→</b><span>Maintain</span>
+</div>
+</div>
+<table>
+<tr><th>Stage</th><th>Copilot opportunity</th><th>Developer responsibility</th></tr>
+<tr><td>Requirement</td><td>Clarify requirements and identify acceptance criteria.</td><td>Decide what the customer actually needs.</td></tr>
+<tr><td>Planning</td><td>Break a feature into tasks and propose an implementation approach.</td><td>Approve scope and architecture.</td></tr>
+<tr><td>Development</td><td>Generate, complete, refactor and explain code.</td><td>Review design and implementation.</td></tr>
+<tr><td>Testing</td><td>Generate unit tests and edge cases.</td><td>Verify that tests are meaningful and pass.</td></tr>
+<tr><td>Debugging</td><td>Explain failures and suggest fixes.</td><td>Confirm root cause.</td></tr>
+<tr><td>Documentation</td><td>Generate and update README/API/comments.</td><td>Ensure documentation remains truthful.</td></tr>
+<tr><td>Review</td><td>Analyze diffs and identify potential risks.</td><td>Make the review decision.</td></tr>
+<tr><td>PR</td><td>Summarize changes and assist with review feedback.</td><td>Approve, request changes or reject.</td></tr>
+<tr><td>Maintenance</td><td>Understand legacy code, refactor and improve.</td><td>Protect behaviour with tests and monitoring.</td></tr>
+</table>
+</section>
+
+<section id="hands-on">
+<h2>9. Complete Hands-on Demo — Daily KPI Note</h2>
+<div class="card check">
+<h3>The running project</h3>
+<p>We use one intentionally small application so every GH-300 capability can be demonstrated without spending the entire session on application development.</p>
+<pre><code>daily-kpi-note/
+├── app.py
+├── index.html
+├── style.css
+├── app.js
+├── test_app.py
+└── README.md</code></pre>
+<p>The app lets a user add a KPI name, category and numeric value, list entries, delete entries, and see count and total.</p>
+</div>
+
+<div class="step">
+<h3>Step 1 — Ask before building</h3>
+<div class="card prompt"><pre><code>I want to build a tiny web app called Daily KPI Note.
+
+A user should be able to:
+- enter KPI name;
+- enter numeric value;
+- choose a category;
+- save it;
+- see saved KPIs;
+- delete a KPI;
+- see count and total.
+
+Audience: analytics professionals and business users.
+
+Do not write code.
+Explain the smallest architecture, minimum files,
+and three important validation rules.</code></pre></div>
+<p><b>Trainer explanation:</b> We are using Copilot as a thinking partner before using it as an implementation partner.</p>
+</div>
+
+<div class="step">
+<h3>Step 2 — Plan the implementation</h3>
+<div class="card prompt"><pre><code>Create a minimal implementation plan for Daily KPI Note.
+
+Use Python + Flask, HTML/CSS/vanilla JavaScript,
+and an in-memory Python list initially.
+
+Constraints:
+- no authentication;
+- no database yet;
+- no frontend framework;
+- no unnecessary abstractions.
+
+Return:
+1. file structure;
+2. data shape;
+3. API routes;
+4. implementation sequence;
+5. test strategy.
+
+Do not create files yet.</code></pre></div>
+</div>
+
+<div class="step">
+<h3>Step 3 — Build with Agent mode</h3>
+<div class="card prompt"><pre><code>Implement the approved Daily KPI Note plan.
+
+Create the required files yourself.
+
+Requirements:
+- one simple page;
+- KPI name, category and numeric value;
+- add/list/delete KPI;
+- count and total;
+- in-memory storage;
+- simple validation;
+- minimal UI;
+- no authentication;
+- no unnecessary libraries.
+
+After implementation:
+1. summarize files;
+2. explain browser-to-API data flow;
+3. identify what I should review;
+4. do not claim it is tested until tests run.</code></pre></div>
+<p>Inspect the generated files and changes before accepting them.</p>
+</div>
+
+<div class="step">
+<h3>Step 4 — Show ghost text</h3>
+<pre><code># Calculate the total KPI value</code></pre>
+<p>Pause and let the suggestion appear. Accept it, undo it, change the comment and observe how the suggestion changes.</p>
+</div>
+
+<div class="step">
+<h3>Step 5 — Explain existing code</h3>
+<pre><code>/explain</code></pre>
+<p>If the current UI does not expose the command, use:</p>
+<pre><code>Explain the selected code in simple language.
+Tell me its inputs, outputs and important edge cases.</code></pre>
+</div>
+
+<div class="step">
+<h3>Step 6 — Ask a project question using context</h3>
+<pre><code>Where is the code that calculates the KPI total?
+
+Explain:
+1. which file contains it;
+2. which function is responsible;
+3. where it is called from.</code></pre>
+<p>Repeat with the workspace/file context available in your client and compare the quality of the response.</p>
+</div>
+
+<div class="step">
+<h3>Step 7 — Inline Chat for a focused edit</h3>
+<div class="card prompt"><pre><code>Improve only this validation.
+
+Rules:
+- KPI name cannot be empty;
+- category cannot be empty;
+- value must be numeric;
+- negative values are rejected.
+
+Keep the existing structure.
+Show the proposed change before I accept it.</code></pre></div>
+<p>Show the diff. Accept or reject deliberately.</p>
+</div>
+
+<div class="step">
+<h3>Step 8 — Generate tests</h3>
+<pre><code>/tests ensure the function rejects empty KPI names,
+rejects negative values, accepts zero,
+and calculates totals correctly</code></pre>
+<p>Run the tests. Do not merely show generated test code—show the test runner.</p>
+</div>
+
+<div class="step">
+<h3>Step 9 — Deliberately break the code</h3>
+<p>Change one operator in the calculation or remove a validation condition. Run the tests and show the failure.</p>
+<pre><code>The test is failing.
+
+Do not modify anything yet.
+
+Explain:
+1. expected result;
+2. actual result;
+3. likely root cause;
+4. smallest safe fix;
+5. regression risk.</code></pre>
+<p>Then use <code>/fix</code> or a focused fix prompt. Apply the change and rerun the tests.</p>
+</div>
+
+<div class="step">
+<h3>Step 10 — Update documentation</h3>
+<pre><code>Update README.md to accurately describe the current application.
+
+Include:
+- purpose;
+- features;
+- setup/run;
+- API routes;
+- validation;
+- test command;
+- current in-memory limitation.
+
+Use the actual project as the source of truth.
+Do not invent features.</code></pre>
+<p>Now add one feature—such as “Clear All KPIs”—and update the README again. This demonstrates that documentation is part of the lifecycle.</p>
+</div>
+
+<div class="step">
+<h3>Step 11 — Review the change</h3>
+<div class="card prompt"><pre><code>Review the current Daily KPI Note changes as a senior developer.
+
+Report only:
+- correctness issues;
+- validation issues;
+- obvious security risks;
+- missing important tests;
+- unnecessary complexity;
+- documentation mismatches.
+
+For each finding give:
+- severity;
+- file/location;
+- why it matters;
+- recommendation.
+
+Do not modify anything.</code></pre></div>
+</div>
+
+<div class="step">
+<h3>Step 12 — Git commit</h3>
+<pre><code>Suggest a concise git commit message for the current changes.
+Explain why it accurately represents the change.
+Do not commit anything.</code></pre>
+<p>Review the diff, then commit yourself or approve the command after understanding it.</p>
+</div>
+
+<div class="step">
+<h3>Step 13 — Pull Request</h3>
+<div class="card prompt"><pre><code>Using the current git diff, prepare a concise PR description.
+
+Include:
+- business purpose;
+- files changed;
+- behaviour changed;
+- tests run;
+- known limitations;
+- review risks.
+
+Use only information present in the current changes.
+Do not invent evidence.</code></pre></div>
+<p>Open the PR on GitHub and use Copilot to summarize the PR and explain important diffs.</p>
+</div>
+
+<div class="step">
+<h3>Step 14 — Optional PR automation</h3>
+<p>If your current Copilot CLI/repository exposes these workflows, explore:</p>
+<pre><code>/pr create
+/pr fix feedback
+/pr fix ci
+/pr fix</code></pre>
+<p>Explain <code>/pr auto</code> as a higher-autonomy workflow rather than using it casually in a live training session.</p>
+</div>
+
+<div class="step">
+<h3>Step 15 — PostgreSQL architecture upgrade</h3>
+<div class="card prompt"><pre><code>The application currently stores KPIs in memory.
+
+I have PostgreSQL running locally.
+
+Do not change code yet.
+
+Identify:
+1. where persistence currently happens;
+2. the smallest PostgreSQL change;
+3. the table schema;
+4. required environment variables;
+5. tests that must change.
+
+Keep the UI and API routes unchanged.
+Return a short implementation plan only.</code></pre></div>
+<p>After approving the plan, implement it and prove that a KPI survives an application restart.</p>
+</div>
+</section>
+
+<section id="testing">
+<h2>10. Testing with GitHub Copilot</h2>
+<div class="card">
+<p>Testing is where Copilot moves from “looks good” to “let's verify it.”</p>
+<div class="flow"><span>Generate</span><b>→</b><span>Run</span><b>→</b><span>Fail</span><b>→</b><span>Diagnose</span><b>→</b><span>Fix</span><b>→</b><span>Rerun</span></div>
+</div>
+<div class="grid">
+<div class="card"><h3>Happy path</h3><p>Does normal input work?</p></div>
+<div class="card"><h3>Boundary</h3><p>What happens at zero, maximum, minimum and empty values?</p></div>
+<div class="card"><h3>Invalid input</h3><p>What should be rejected?</p></div>
+<div class="card"><h3>Regression</h3><p>Does the fix break something that previously worked?</p></div>
+</div>
+<div class="card prompt"><h3>Ask Copilot for edge cases</h3><pre><code>For this function, identify important edge cases
+that a unit test suite should cover.
+
+Return:
+- case;
+- input;
+- expected result;
+- why it matters.
+
+Do not write tests yet.</code></pre></div>
+</section>
+
+<section id="tokens">
+<h2>11. Tokens, Context & Usage Optimization</h2>
+<div class="card">
+<h3>What is a token?</h3>
+<p>A token is a small unit of text processed by a language model. Words, punctuation and pieces of words can be represented as tokens.</p>
+<p><b>Analogy:</b> Imagine a conversation made from Lego pieces. The more pieces you send and the more pieces the model generates, the more model processing is involved.</p>
+</div>
+<div class="flow"><span>Prompt</span><b>+</b><span>Context</span><b>+</b><span>Conversation</span><b>+</b><span>Model output</span><b>→</b><span>Usage</span></div>
+<table>
+<tr><th>Technique</th><th>Why it helps</th><th>Example</th></tr>
+<tr><td>Use focused context</td><td>Reduces irrelevant information.</td><td>Reference one file/function.</td></tr>
+<tr><td>Use slash commands</td><td>Packages common intentions into concise interactions.</td><td><code>/tests</code> instead of a long testing instruction.</td></tr>
+<tr><td>Bound the output</td><td>Prevents unnecessarily large answers.</td><td>“Return 5 findings maximum.”</td></tr>
+<tr><td>Plan first</td><td>Avoids giant speculative implementations.</td><td>“Plan only. Do not edit.”</td></tr>
+<tr><td>Work incrementally</td><td>Smaller changes are easier to validate.</td><td>Feature → test → verify.</td></tr>
+<tr><td>Use the appropriate model</td><td>Match model capability to task complexity.</td><td>Simple explanation vs complex architecture.</td></tr>
+<tr><td>Compact long conversations when available</td><td>Reduces accumulated noise.</td><td>Use the current compact/summarize feature exposed by the client.</td></tr>
+</table>
+<div class="two">
+<div class="card warn"><h3>Token-heavy</h3><pre><code>Read the whole repository,
+all documentation,
+all previous messages,
+all tests,
+all configuration,
+and then rewrite everything.</code></pre></div>
+<div class="card check"><h3>Token-conscious</h3><pre><code>Review the selected validator.
+
+Find up to 5 correctness issues.
+Do not modify code.
+Return severity + recommendation.</code></pre></div>
+</div>
+<p class="small">Current Copilot usage and billing can depend on model and token consumption, and GitHub's billing model has evolved over time. Always check the current plan documentation before teaching numerical limits as permanent rules.</p>
+</section>
+
+<section id="docs">
+<h2>12. Documentation Is Part of Development</h2>
+<div class="card">
+<p>A common developer mistake is treating documentation as a final ceremony. With Copilot, documentation can be updated as the code changes.</p>
+<div class="flow"><span>Implement</span><b>→</b><span>Test</span><b>→</b><span>Document</span><b>→</b><span>Review</span><b>→</b><span>PR</span></div>
+</div>
+<div class="card prompt">
+<h3>README maintenance prompt</h3>
+<pre><code>Review the current repository and update README.md.
+
+Document only features that currently exist.
+Include:
+- purpose;
+- architecture overview;
+- setup;
+- run instructions;
+- API routes;
+- validation;
+- testing;
+- known limitations.
+
+If the code and README disagree,
+identify the disagreement before changing the documentation.</code></pre>
+</div>
+</section>
+
+<section id="pr">
+<h2>13. Pull Requests, Code Review & Collaboration</h2>
+<div class="card">
+<p>The PR is the handoff point between “I changed something” and “the team is willing to own this change.”</p>
+</div>
+<div class="card prompt">
+<h3>PR summary</h3>
+<pre><code>Summarize this pull request for a reviewer.
+
+Include:
+- business purpose;
+- files changed;
+- behaviour changed;
+- tests run;
+- known limitations;
+- risks requiring reviewer attention.
+
+Use only information present in the PR.</code></pre>
+</div>
+<div class="card">
+<h3>Review workflow</h3>
+<ol>
+<li>Open the PR.</li>
+<li>Read the generated summary.</li>
+<li>Open <b>Files changed</b>.</li>
+<li>Select an important diff.</li>
+<li>Ask Copilot to explain the change and identify risks.</li>
+<li>Review unresolved feedback.</li>
+<li>Run tests/CI evidence.</li>
+<li>Make the final human review decision.</li>
+</ol>
+</div>
+</section>
+
+<section id="module-guides">
+<h2>14. Module-by-Module Learning Guide</h2>
+
+<div class="card"><h3>Module 1 — Responsible AI</h3><p><b>Focus:</b> Understand risks before using AI. Learn the six principles and how to apply them to AI-assisted development.</p><p><b>Takeaway:</b> “Useful” is not enough. AI output must also be responsible, reliable and reviewable.</p></div>
+<div class="card"><h3>Module 2 — Introduction to GitHub Copilot</h3><p><b>Focus:</b> Understand Copilot, suggestions, interaction modes, setup, plans and troubleshooting.</p><p><b>Takeaway:</b> Know how to move between autocomplete and conversational assistance.</p></div>
+<div class="card"><h3>Module 3 — Prompt Engineering</h3><p><b>Focus:</b> Learn how clarity, context, constraints and expected output affect Copilot responses.</p><p><b>Takeaway:</b> Better instructions produce more relevant assistance.</p></div>
+<div class="card"><h3>Module 4 — Advanced Features</h3><p><b>Focus:</b> Chat, Inline Chat, slash commands, agents, project context, testing and documentation.</p><p><b>Takeaway:</b> Combine features instead of using them in isolation.</p></div>
+<div class="card"><h3>Module 5 — Across Environments</h3><p><b>Focus:</b> IDE, Chat, GitHub.com and command line.</p><p><b>Takeaway:</b> Copilot follows the developer across the workflow.</p></div>
+<div class="card"><h3>Module 6 — Management & Customization</h3><p><b>Focus:</b> Plans, policies, privacy, exclusions, public-code matching and troubleshooting.</p><p><b>Takeaway:</b> Enterprise AI needs governance as well as productivity.</p></div>
+<div class="card"><h3>Module 7 — Developer Use Cases</h3><p><b>Focus:</b> Map Copilot to productivity and SDLC activities while understanding limitations.</p><p><b>Takeaway:</b> Measure value by outcomes, not by how much code AI generated.</p></div>
+<div class="card"><h3>Module 8 — Unit Testing</h3><p><b>Focus:</b> Generate tests, target edge cases, run tests and fix failures.</p><p><b>Takeaway:</b> Generated code becomes useful only after verification.</p></div>
+<div class="card"><h3>Module 9 — Copilot Business</h3><p><b>Focus:</b> Understand organizational use, access management and business capabilities.</p><p><b>Takeaway:</b> Team adoption requires centralized controls.</p></div>
+<div class="card"><h3>Module 10 — Copilot Enterprise</h3><p><b>Focus:</b> Enterprise integration, repository context, collaboration, documentation and code review capabilities.</p><p><b>Takeaway:</b> Copilot can become part of organizational development workflows, not just an editor extension.</p></div>
+<div class="card"><h3>Module 11 — JavaScript</h3><p><b>Focus:</b> Apply Copilot to a JavaScript project using prompts and live suggestions.</p><p><b>Takeaway:</b> The principles transfer directly to a real language/project.</p></div>
+<div class="card"><h3>Module 12 — Python</h3><p><b>Focus:</b> Apply Copilot to a Python project/API and use live suggestions effectively.</p><p><b>Takeaway:</b> Prompting and context are language-independent skills.</p></div>
+</section>
+
+<section id="links">
+<h2>15. Official Microsoft Learn Resources</h2>
+<div class="card">
+<h3>Learning paths</h3>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/training/paths/copilot/" target="_blank" rel="noopener">Microsoft Learn — GitHub Copilot Fundamentals Part 1 of 2</a></li>
+<li><a href="https://learn.microsoft.com/en-us/training/paths/gh-copilot-2/" target="_blank" rel="noopener">Microsoft Learn — GitHub Copilot Fundamentals Part 2 of 2</a></li>
+<li><a href="https://learn.microsoft.com/en-us/credentials/certifications/github-copilot/" target="_blank" rel="noopener">Microsoft Learn — GitHub Copilot Certification</a></li>
+<li><a href="https://learn.microsoft.com/en-us/credentials/certifications/github-copilot/practice/assessment" target="_blank" rel="noopener">Microsoft Learn — GH-300 Practice Assessment</a></li>
+</ul>
+</div>
+
+<table>
+<tr><th>Topic</th><th>Official Microsoft Learn</th></tr>
+<tr><td>Responsible AI</td><td><a href="https://learn.microsoft.com/en-us/training/modules/responsible-ai-with-github-copilot/" target="_blank">Responsible AI with GitHub Copilot</a></td></tr>
+<tr><td>Introduction</td><td><a href="https://learn.microsoft.com/en-us/training/modules/introduction-to-github-copilot/" target="_blank">Introduction to GitHub Copilot</a></td></tr>
+<tr><td>Prompt engineering</td><td><a href="https://learn.microsoft.com/en-us/training/modules/introduction-prompt-engineering-with-github-copilot/" target="_blank">Introduction to prompt engineering with GitHub Copilot</a></td></tr>
+<tr><td>Advanced features</td><td><a href="https://learn.microsoft.com/en-us/training/modules/advanced-github-copilot/" target="_blank">Using advanced GitHub Copilot features</a></td></tr>
+<tr><td>Across environments</td><td><a href="https://learn.microsoft.com/en-us/training/modules/github-copilot-across-environments/" target="_blank">GitHub Copilot Across Environments</a></td></tr>
+<tr><td>Management</td><td><a href="https://learn.microsoft.com/en-us/training/modules/github-copilot-management-and-customizations/" target="_blank">Management and customization considerations</a></td></tr>
+<tr><td>Developer use cases</td><td><a href="https://learn.microsoft.com/en-us/training/modules/developer-use-cases-for-ai-with-github-copilot/" target="_blank">Developer use cases for AI with GitHub Copilot</a></td></tr>
+<tr><td>Unit testing</td><td><a href="https://learn.microsoft.com/en-us/training/modules/develop-unit-tests-using-github-copilot-tools/" target="_blank">Develop unit tests using GitHub Copilot tools</a></td></tr>
+<tr><td>JavaScript</td><td><a href="https://learn.microsoft.com/en-us/training/modules/introduction-copilot-javascript/" target="_blank">Using GitHub Copilot with JavaScript</a></td></tr>
+<tr><td>Python</td><td><a href="https://learn.microsoft.com/en-us/training/modules/introduction-copilot-python/" target="_blank">Using GitHub Copilot with Python</a></td></tr>
+</table>
+
+<div class="card info">
+<p><b>Important:</b> Microsoft Learn content evolves as GitHub Copilot evolves. Module names, URLs, features, plans and UI can change. The links above point learners to Microsoft Learn rather than reproducing proprietary course material here.</p>
+</div>
+</section>
+
+<section id="final">
+<h2>16. Final Challenge — Put It All Together</h2>
+<div class="card check">
+<p>Give the learner this requirement:</p>
+<pre><code>Add a “Clear All KPIs” button.
+
+Constraints:
+- keep the existing UI style;
+- ask for confirmation before deleting;
+- add unit tests;
+- update README;
+- prepare a PR summary;
+- do not break existing functionality.</code></pre>
+<h3>The learner must choose the workflow</h3>
+<p><b>1.</b> Ask/understand → <b>2.</b> Plan → <b>3.</b> Implement → <b>4.</b> Test → <b>5.</b> Fix if needed → <b>6.</b> Update docs → <b>7.</b> Review → <b>8.</b> PR.</p>
+<p>Then ask: <b>“Which Copilot capability did you use at each step, and why?”</b></p>
+</div>
+</section>
+
+<section>
+<h2>17. The One-Minute Mental Model</h2>
+<div class="card say">
+<p><b>Don't know → Ask.</b></p>
+<p><b>Need a decision → Plan.</b></p>
+<p><b>Need execution → Agent.</b></p>
+<p><b>Need a focused edit → Inline Chat.</b></p>
+<p><b>Need a common task → Slash command.</b></p>
+<p><b>Need terminal help → CLI.</b></p>
+<p><b>Changed code → Test.</b></p>
+<p><b>Test failed → Diagnose → Fix → Rerun.</b></p>
+<p><b>Changed behaviour → Update documentation.</b></p>
+<p><b>Ready to collaborate → Review → PR.</b></p>
+<p><b>Always → Provide the right context and verify the result.</b></p>
+</div>
+</section>
+
+</main>
+
+<footer>
+<h3 style="color:#fff">RR Skillverse Notes by Raushan Ranjan (MCT)</h3>
+<p><b>Written by Raushan Ranjan and RR Skillverse</b></p>
+<p>Free learning blogs and tools • Practical developer notes • Hands-on learning resources</p>
+<p>This is an independent learning resource created for educational purposes. It is not an official Microsoft publication, certification exam dump, or replacement for Microsoft Learn. Microsoft Learn is linked as the authoritative source for official training content.</p>
+<p>GitHub, GitHub Copilot, Microsoft Learn and related product names are trademarks of their respective owners.</p>
+<p><a href="https://rrskillverse.in/" target="_blank">RR Skillverse</a> · <a href="https://github.com/raushan1107" target="_blank">GitHub</a> · <a href="https://learn.microsoft.com/" target="_blank">Microsoft Learn</a></p>
+</footer>
+
+</body>
+</html>
