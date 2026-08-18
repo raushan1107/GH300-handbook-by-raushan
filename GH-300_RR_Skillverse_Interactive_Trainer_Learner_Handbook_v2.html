@@ -1,0 +1,805 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>GH-300 GitHub Copilot Fundamentals — RR Skillverse Interactive Handbook</title>
+<meta name="description" content="Interactive GH-300 GitHub Copilot Fundamentals learning and hands-on lab handbook by Raushan Ranjan and RR Skillverse.">
+<style>
+:root{
+ --bg:#f4f6fb;--card:#fff;--ink:#172033;--muted:#667085;--line:#dfe4ed;
+ --a:#6246e8;--a2:#eeeaff;--b:#087ea4;--g:#15803d;--orange:#b45309;
+ --dark:#101827;--dark2:#182338;--shadow:0 8px 28px rgba(16,24,39,.08)
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.65 "Segoe UI",Arial,sans-serif}
+header{background:linear-gradient(135deg,#15102c,#39227b,#076b88);color:#fff;padding:48px 7vw}
+header h1{font-size:42px;line-height:1.08;margin:12px 0}
+header h2{font-weight:400;color:#e9edfb;max-width:1000px;font-size:20px}
+header p{max-width:1080px;color:#e4e9f7}
+.badge{display:inline-block;padding:6px 11px;border:1px solid #ffffff44;background:#ffffff18;border-radius:999px;font-size:12px;font-weight:800}
+.tabs{position:sticky;top:0;z-index:30;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 3px 12px #10182710;padding:10px 4vw;display:flex;gap:8px;flex-wrap:wrap}
+.tab{border:1px solid var(--line);background:#f8f9fc;color:#344054;padding:10px 15px;border-radius:10px;font-weight:800;cursor:pointer}
+.tab.active{background:var(--a);color:#fff;border-color:var(--a)}
+.panel{display:none}
+.panel.active{display:block}
+.subnav{position:sticky;top:61px;z-index:20;background:#fafbfe;border-bottom:1px solid var(--line);padding:8px 5vw;display:flex;gap:7px;overflow:auto}
+.subnav a{white-space:nowrap;text-decoration:none;background:var(--a2);color:#40289d;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:800}
+main{max-width:1320px;margin:25px auto;padding:0 22px}
+section{margin:35px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;margin:14px 0;box-shadow:var(--shadow)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+h2{font-size:30px;line-height:1.2}
+h3{font-size:20px;color:#40289d;margin-top:7px}
+h4{margin-bottom:6px}
+.say{border-left:5px solid var(--b);background:#effbfe}
+.prompt{border-left:5px solid var(--a);background:#f5f2ff}
+.check{border-left:5px solid var(--g);background:#effaf2}
+.warn{border-left:5px solid var(--orange);background:#fff7ed}
+.info{border-left:5px solid #667085;background:#f7f8fa}
+pre{background:var(--dark);color:#e9eefb;padding:16px;border-radius:11px;overflow:auto;white-space:pre-wrap;word-break:break-word}
+code{font-family:Consolas,Monaco,monospace}
+table{width:100%;border-collapse:collapse}
+th,td{padding:10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--a2);color:#40289d}
+.flow{display:flex;flex-wrap:wrap;align-items:center;gap:7px;margin:14px 0}
+.flow span{background:#fff;border:1px solid var(--line);padding:7px 11px;border-radius:9px;font-weight:800}
+.flow b{color:var(--a)}
+.step{margin:22px 0;border:1px solid var(--line);border-radius:15px;background:#fff;overflow:hidden}
+.stephead{padding:15px 18px;background:#faf9ff;border-bottom:1px solid var(--line)}
+.stepbody{padding:18px}
+.num{display:inline-flex;width:32px;height:32px;align-items:center;justify-content:center;background:var(--a);color:#fff;border-radius:50%;font-weight:900;margin-right:8px}
+.tag{display:inline-block;background:#eee9ff;color:#40289d;border-radius:999px;padding:3px 8px;font-size:11px;font-weight:800;margin:2px}
+.connection{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.connection>div{padding:12px;border-radius:10px;border:1px solid var(--line)}
+.connection .learn{background:#f4f1ff}.connection .do{background:#effbfe}
+.small{font-size:13px;color:var(--muted)}
+.kpi{font-size:28px;font-weight:900;color:var(--a)}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap}
+.mini{background:#fff;border:1px solid var(--line);border-radius:9px;padding:8px 11px;font-weight:800}
+.anchor{scroll-margin-top:125px}
+.checklist{list-style:none;padding:0}
+.checklist li{padding:9px 0;border-bottom:1px dashed var(--line)}
+.checklist li::before{content:"☐";margin-right:8px;color:var(--a);font-weight:900}
+footer{background:#111827;color:#cbd5e1;padding:38px 7vw;margin-top:55px}
+footer h3{color:#fff}
+footer a{color:#dce5ff}
+@media(max-width:800px){header h1{font-size:32px}.two,.connection{grid-template-columns:1fr}.subnav{top:112px}}
+</style>
+</head>
+<body>
+
+<header>
+<span class="badge">RR Skillverse Notes · By Raushan Ranjan (MCT)</span>
+<h1>GH-300: GitHub Copilot Fundamentals</h1>
+<h2>Learn the concepts, then immediately connect them to a real developer workflow.</h2>
+<p>This handbook is deliberately split into <b>Learning</b> and <b>Hands-on Lab</b>. The Learning area explains the ideas. The Lab turns those ideas into one connected project that learners build, test, document, review and publish.</p>
+</header>
+
+<div class="tabs" role="tablist">
+<button class="tab active" onclick="showTab('learning',this)">📘 Learning</button>
+<button class="tab" onclick="showTab('lab',this)">🛠 Hands-on Lab</button>
+<button class="tab" onclick="showTab('prompts',this)">💬 Prompt Library</button>
+<button class="tab" onclick="showTab('reference',this)">🔗 Official References</button>
+</div>
+
+<div id="learning" class="panel active">
+<div class="subnav">
+<a href="#l-overview">Overview</a><a href="#l-path1">Path 1</a><a href="#l-path2">Path 2</a>
+<a href="#l-rai">Responsible AI</a><a href="#l-prompt">Prompting</a><a href="#l-advanced">Advanced</a>
+<a href="#l-env">Environments</a><a href="#l-mgmt">Management</a><a href="#l-sdlc">SDLC</a>
+<a href="#l-tokens">Tokens</a>
+</div>
+<main>
+<section id="l-overview" class="anchor">
+<h2>How to Use This Handbook</h2>
+<div class="card say">
+<p><b>Do not simply copy every prompt from this handbook.</b> A prompt is useful only when it is connected to the right context, the right developer task and a verification step.</p>
+<p>The intended learning loop is:</p>
+<div class="flow"><span>Learn</span><b>→</b><span>Open IDE</span><b>→</b><span>Apply</span><b>→</b><span>Inspect</span><b>→</b><span>Test</span><b>→</b><span>Improve</span><b>→</b><span>Document</span><b>→</b><span>Review</span></div>
+</div>
+<div class="card check">
+<h3>The missing connection — now made explicit</h3>
+<table>
+<tr><th>What you learn</th><th>Where you apply it</th></tr>
+<tr><td>Responsible AI</td><td>Before generating code: identify risk, privacy, security and verification requirements.</td></tr>
+<tr><td>Prompt engineering</td><td>Every lab prompt: add context, constraints and expected output.</td></tr>
+<tr><td>Advanced features</td><td>Use Chat, Inline Chat, slash commands and agents during implementation.</td></tr>
+<tr><td>IDE usage</td><td>Build the application directly in Visual Studio / VS Code.</td></tr>
+<tr><td>Testing</td><td>Generate tests, run them, deliberately create a failure and fix it.</td></tr>
+<tr><td>Documentation</td><td>Ask Copilot to update README from the actual code.</td></tr>
+<tr><td>SDLC</td><td>Move the same project from requirement → code → test → docs → PR.</td></tr>
+<tr><td>Management</td><td>Discuss what organizational controls should apply before publishing or using sensitive code.</td></tr>
+</table>
+</div>
+</section>
+
+<section id="l-path1" class="anchor">
+<h2>Learning Path 1 — Fundamentals Part 1 of 2</h2>
+<div class="grid">
+<div class="card"><span class="tag">Module 1</span><h3>Responsible AI</h3><p>Understand responsible AI principles and apply them to AI-assisted development.</p></div>
+<div class="card"><span class="tag">Module 2</span><h3>Introduction to GitHub Copilot</h3><p>Understand suggestions, interaction modes, setup, plans and troubleshooting.</p></div>
+<div class="card"><span class="tag">Module 3</span><h3>Prompt Engineering</h3><p>Learn how context, instructions and constraints affect Copilot output.</p></div>
+<div class="card"><span class="tag">Module 4</span><h3>Advanced Copilot Features</h3><p>Use Chat, Inline Chat, slash commands, agents and project-aware interactions.</p></div>
+<div class="card"><span class="tag">Module 5</span><h3>Across Environments</h3><p>Use Copilot across the IDE, Chat, GitHub.com and command line.</p></div>
+<div class="card"><span class="tag">Module 6</span><h3>Management & Customization</h3><p>Understand plans, policies, privacy, exclusions and organizational controls.</p></div>
+</div>
+</section>
+
+<section id="l-path2" class="anchor">
+<h2>Learning Path 2 — Fundamentals Part 2 of 2</h2>
+<div class="grid">
+<div class="card"><span class="tag">Module 7</span><h3>Developer Use Cases</h3><p>Connect Copilot to productivity and stages of the SDLC while recognizing limitations.</p></div>
+<div class="card"><span class="tag">Module 8</span><h3>Unit Testing</h3><p>Generate tests, target edge cases, run tests and fix failures.</p></div>
+<div class="card"><span class="tag">Module 9</span><h3>Copilot Business</h3><p>Understand organizational use, access and business capabilities.</p></div>
+<div class="card"><span class="tag">Module 10</span><h3>Copilot Enterprise</h3><p>Understand deeper organizational integration, collaboration and repository context.</p></div>
+<div class="card"><span class="tag">Module 11</span><h3>Copilot with JavaScript</h3><p>Apply prompting and Copilot workflows to a JavaScript project.</p></div>
+<div class="card"><span class="tag">Module 12</span><h3>Copilot with Python</h3><p>Apply prompting and Copilot workflows to a Python project/API.</p></div>
+</div>
+</section>
+
+<section id="l-rai" class="anchor">
+<h2>Responsible AI</h2>
+<div class="card">
+<p>The first question is not “Can Copilot generate this?” It is “<b>Should we use this output, and how will we verify it?</b>”</p>
+<div class="grid">
+<div class="card"><h3>Fairness</h3><p>Could the solution disadvantage people or groups?</p></div>
+<div class="card"><h3>Inclusiveness</h3><p>Does it work for different users and circumstances?</p></div>
+<div class="card"><h3>Reliability & Safety</h3><p>What happens when the AI is wrong?</p></div>
+<div class="card"><h3>Privacy & Security</h3><p>What information is being provided and what risks can the generated code introduce?</p></div>
+<div class="card"><h3>Transparency</h3><p>Can people understand the system and its limitations?</p></div>
+<div class="card"><h3>Accountability</h3><p>Who reviews and owns the final decision or code?</p></div>
+</div>
+</div>
+</section>
+
+<section id="l-prompt" class="anchor">
+<h2>Prompt Engineering</h2>
+<div class="card">
+<h3>R-C-C-O pattern</h3>
+<div class="flow"><span>Role</span><b>+</b><span>Context</span><b>+</b><span>Constraints</span><b>+</b><span>Output</span></div>
+<p>Good prompts make the task explicit. Great prompts also tell Copilot what it must preserve, what it must not do, and how you want the result presented.</p>
+</div>
+<div class="two">
+<div class="card prompt"><h3>Weak</h3><pre><code>Fix this code.</code></pre></div>
+<div class="card check"><h3>Controlled</h3><pre><code>Review the selected function.
+
+Find the root cause.
+Do not change the public method signature.
+Explain the issue first.
+Then propose the smallest safe fix.
+Return the proposed change as a diff.</code></pre></div>
+</div>
+</section>
+
+<section id="l-advanced" class="anchor">
+<h2>Advanced Features</h2>
+<table>
+<tr><th>Capability</th><th>Use it when...</th></tr>
+<tr><td>Ghost text</td><td>You are actively typing and want fast code completion.</td></tr>
+<tr><td>Chat</td><td>You need explanation, planning, debugging or broader reasoning.</td></tr>
+<tr><td>Inline Chat</td><td>You want a focused change without leaving the current code.</td></tr>
+<tr><td>Slash commands</td><td>You have a common developer intention such as explain, test or fix.</td></tr>
+<tr><td>Agents</td><td>The task involves multiple steps and project context.</td></tr>
+<tr><td>Workspace/context references</td><td>The answer needs knowledge from your actual project.</td></tr>
+</table>
+</section>
+
+<section id="l-env" class="anchor">
+<h2>IDE, Chat, GitHub.com and CLI</h2>
+<div class="flow"><span>IDE</span><b>→</b><span>Chat</span><b>→</b><span>GitHub.com</span><b>→</b><span>CLI</span><b>→</b><span>PR</span></div>
+<div class="card">
+<p>The important connection is not memorizing interfaces. It is understanding <b>which surface is closest to the task</b>.</p>
+<ul>
+<li><b>IDE:</b> write and modify code.</li>
+<li><b>Chat:</b> discuss and reason.</li>
+<li><b>GitHub.com:</b> collaborate around repository work, issues and PRs.</li>
+<li><b>CLI:</b> work with commands, scripts and terminal workflows.</li>
+<li><b>PR:</b> review and collaborate before integration.</li>
+</ul>
+</div>
+</section>
+
+<section id="l-mgmt" class="anchor">
+<h2>Management & Customization</h2>
+<div class="card">
+<p>When Copilot moves into an organization, governance becomes part of the developer experience. Think about plans, access, policies, privacy, content exclusions, public-code matching and troubleshooting.</p>
+</div>
+</section>
+
+<section id="l-sdlc" class="anchor">
+<h2>Copilot Across the SDLC</h2>
+<div class="card">
+<div class="flow"><span>Requirement</span><b>→</b><span>Plan</span><b>→</b><span>Build</span><b>→</b><span>Test</span><b>→</b><span>Debug</span><b>→</b><span>Document</span><b>→</b><span>Review</span><b>→</b><span>PR</span><b>→</b><span>Maintain</span></div>
+<p>This is the connection that the hands-on lab makes visible. We will use <b>one project</b> and repeatedly apply different Copilot capabilities to it.</p>
+</div>
+</section>
+
+<section id="l-tokens" class="anchor">
+<h2>Tokens, Context and Usage</h2>
+<div class="card">
+<p>Think of context as the information Copilot has available for the current task. More context is not automatically better. The goal is <b>relevant context</b>.</p>
+<div class="two">
+<div class="card warn"><b>Too broad:</b><pre><code>Read everything and rewrite the application.</code></pre></div>
+<div class="card check"><b>Focused:</b><pre><code>Review the selected validator.
+Find up to 5 issues.
+Do not modify code.
+Return severity + recommendation.</code></pre></div>
+</div>
+</div>
+</section>
+</main>
+</div>
+
+<div id="lab" class="panel">
+<div class="subnav">
+<a href="#lab-start">Start</a><a href="#lab-setup">Setup</a><a href="#lab-req">Requirement</a><a href="#lab-build">Build</a>
+<a href="#lab-context">Context</a><a href="#lab-test">Testing</a><a href="#lab-doc">Docs</a><a href="#lab-review">Review</a>
+<a href="#lab-pr">PR</a><a href="#lab-upgrade">Upgrade</a><a href="#lab-finish">Finish</a>
+</div>
+<main>
+<section id="lab-start" class="anchor">
+<h2>Hands-on Lab — Build a Real Project with GitHub Copilot</h2>
+<div class="card say">
+<h3>Important: this is not a prompt-copying exercise.</h3>
+<p>You will build one small application from beginning to end. Every time you learn a GH-300 concept, you will immediately use that concept on the same project.</p>
+<div class="flow"><span>Learn</span><b>→</b><span>Connect</span><b>→</b><span>Do</span><b>→</b><span>Verify</span><b>→</b><span>Reflect</span></div>
+</div>
+<div class="card check">
+<h3>Trainer instruction</h3>
+<p>Open the IDE with the learners. Keep this page in the browser. Switch between the <b>Learning</b> tab when explaining a concept and the <b>Hands-on Lab</b> tab when it is time to build.</p>
+</div>
+</section>
+
+<section id="lab-setup" class="anchor">
+<h2>Step 0 — Open the Development Environment</h2>
+<div class="card">
+<h3>Choose one environment</h3>
+<ul>
+<li>Visual Studio Code + GitHub Copilot, or</li>
+<li>Visual Studio + GitHub Copilot where supported by the learner's setup.</li>
+</ul>
+<p>Sign in to GitHub, verify Copilot access and create a new repository named:</p>
+<pre><code>daily-kpi-note</code></pre>
+</div>
+<div class="connection">
+<div class="learn"><b>Learning connection:</b><br>Module 2 — Introduction to GitHub Copilot: setup, suggestions and interaction modes.</div>
+<div class="do"><b>What you do now:</b><br>Open the IDE, create the repository/project and verify that Copilot suggestions appear.</div>
+</div>
+<div class="card prompt">
+<h3>First prompt — do not build yet</h3>
+<pre><code>I am starting a small project called Daily KPI Note.
+
+Before writing any code, tell me:
+1. what information you need from me;
+2. what assumptions you would make;
+3. what the smallest useful version of this application should contain.
+
+Do not create files yet.</code></pre>
+</div>
+</section>
+
+<section id="lab-req" class="anchor">
+<h2>Step 1 — Turn a Business Requirement into a Technical Plan</h2>
+<div class="connection">
+<div class="learn"><b>Connects to:</b><br>Module 3 — Prompt Engineering + Module 7 — Developer Use Cases.</div>
+<div class="do"><b>Why now?</b><br>We are using prompting for planning, not code generation.</div>
+</div>
+<div class="card prompt">
+<pre><code>I want to build a tiny web application called Daily KPI Note.
+
+A user should be able to:
+- enter KPI name;
+- enter numeric value;
+- choose a category;
+- save it;
+- see saved KPIs;
+- delete a KPI;
+- see count and total.
+
+Audience:
+analytics professionals and business users.
+
+Constraints:
+- keep the first version simple;
+- no authentication;
+- no database initially;
+- avoid unnecessary libraries.
+
+Do not write implementation code yet.
+
+Return:
+1. architecture;
+2. minimum file structure;
+3. data shape;
+4. API routes;
+5. validation rules;
+6. implementation order;
+7. testing strategy.</code></pre>
+</div>
+<div class="card check"><b>Checkpoint:</b> Do not continue until the learner can explain the architecture in their own words.</div>
+</section>
+
+<section id="lab-build" class="anchor">
+<h2>Step 2 — Build the Minimum Viable Application</h2>
+<div class="connection">
+<div class="learn"><b>Connects to:</b><br>Module 2 — Copilot + Module 4 — Advanced Features.</div>
+<div class="do"><b>Capability:</b><br>Agent / Chat / Inline Chat depending on the learner's available Copilot experience.</div>
+</div>
+<div class="card prompt">
+<pre><code>Using the approved Daily KPI Note plan, implement the smallest working version.
+
+Requirements:
+- one simple page;
+- KPI name, category and numeric value;
+- add KPI;
+- list KPIs;
+- delete KPI;
+- show count and total;
+- in-memory storage;
+- basic validation;
+- minimal UI.
+
+Do not add:
+- authentication;
+- database;
+- frontend framework;
+- unnecessary abstractions.
+
+After implementation:
+1. summarize the files created;
+2. explain the data flow;
+3. list assumptions;
+4. list what I must manually verify.
+
+Do not claim the application is tested yet.</code></pre>
+</div>
+<div class="card check">
+<h3>Human checkpoint</h3>
+<ul class="checklist">
+<li>Open every generated file.</li>
+<li>Understand the API route(s).</li>
+<li>Run the application.</li>
+<li>Add one KPI.</li>
+<li>Add a second KPI.</li>
+<li>Delete one KPI.</li>
+<li>Confirm count and total.</li>
+<li>Check an invalid input.</li>
+</ul>
+</div>
+</section>
+
+<section id="lab-context" class="anchor">
+<h2>Step 3 — Use Context Instead of Re-explaining Everything</h2>
+<div class="connection">
+<div class="learn"><b>Connects to:</b><br>Module 4 — Advanced Features + Module 5 — Across Environments.</div>
+<div class="do"><b>Goal:</b><br>Show why project context makes Copilot more useful than a generic chatbot.</div>
+</div>
+<div class="card prompt">
+<pre><code>Where is the code responsible for calculating the KPI total?
+
+Use the current project context.
+
+Tell me:
+1. file name;
+2. function or method;
+3. where it is called;
+4. what input it receives;
+5. one edge case I should test.
+
+Do not modify anything.</code></pre>
+</div>
+<div class="card">
+<h3>Then move to Inline Chat</h3>
+<pre><code>Improve only this validation.
+
+Rules:
+- KPI name cannot be empty;
+- category cannot be empty;
+- value must be numeric;
+- negative values are rejected.
+
+Keep the existing structure.
+Show the proposed change before applying it.</code></pre>
+</div>
+<div class="card say"><b>Teaching point:</b> The same natural-language skill is now being used at a different Copilot surface. The learner should be able to explain why Chat and Inline Chat are different choices.</div>
+</section>
+
+<section id="lab-test" class="anchor">
+<h2>Step 4 — Testing: Make Copilot Prove Its Work</h2>
+<div class="connection">
+<div class="learn"><b>Connects to:</b><br>Module 8 — Develop Unit Tests Using GitHub Copilot Tools.</div>
+<div class="do"><b>Goal:</b><br>Move from “Copilot generated code” to “the code has evidence.”</div>
+</div>
+<div class="card prompt">
+<h3>First ask for test cases</h3>
+<pre><code>For the KPI validation and total-calculation logic,
+identify the most important unit-test cases.
+
+Include:
+- normal input;
+- empty input;
+- zero;
+- negative value;
+- invalid numeric input;
+- multiple KPI values.
+
+Return:
+case + input + expected result + reason.
+
+Do not write tests yet.</code></pre>
+</div>
+<div class="card prompt">
+<h3>Then generate tests</h3>
+<pre><code>Now create unit tests for the cases we identified.
+
+Requirements:
+- keep tests readable;
+- one behaviour per test;
+- use descriptive test names;
+- do not change production code;
+- create only the necessary test code.</code></pre>
+</div>
+<div class="card warn">
+<h3>Deliberately create a failure</h3>
+<p>Change one validation rule or calculation operator manually. Run the tests.</p>
+<pre><code>The test suite is failing.
+
+Do not change code yet.
+
+Explain:
+1. expected result;
+2. actual result;
+3. likely root cause;
+4. smallest safe fix;
+5. regression risk.</code></pre>
+</div>
+<div class="card check">
+<h3>Fix and verify</h3>
+<pre><code>Apply the smallest safe fix for the identified root cause.
+
+Do not make unrelated changes.
+
+After the fix:
+1. show the changed code;
+2. explain why it fixes the failure;
+3. run the relevant tests;
+4. report the test result.</code></pre>
+</div>
+</section>
+
+<section id="lab-doc" class="anchor">
+<h2>Step 5 — Documentation Is Another Copilot Use Case</h2>
+<div class="connection">
+<div class="learn"><b>Connects to:</b><br>Module 4 — Advanced Features + Module 7 — Developer Use Cases.</div>
+<div class="do"><b>Goal:</b><br>Update documentation from the actual implementation rather than asking AI to invent a README.</div>
+</div>
+<div class="card prompt">
+<pre><code>Review the current Daily KPI Note project and update README.md.
+
+Document only what currently exists.
+
+Include:
+- purpose;
+- features;
+- architecture;
+- setup;
+- run instructions;
+- API routes;
+- validation;
+- testing;
+- known limitations.
+
+If the current README conflicts with the code,
+identify the conflict before changing it.
+
+Do not invent functionality.</code></pre>
+</div>
+<div class="card check">
+<p>Open README.md and compare it with the actual application. Ask the learner: <b>“Can you prove every important statement in this README from the code?”</b></p>
+</div>
+</section>
+
+<section id="lab-review" class="anchor">
+<h2>Step 6 — Code Review Before Collaboration</h2>
+<div class="connection">
+<div class="learn"><b>Connects to:</b><br>Module 1 — Responsible AI + Module 7 — Developer Use Cases.</div>
+<div class="do"><b>Goal:</b><br>Use AI to assist review while keeping the human responsible for the final decision.</div>
+</div>
+<div class="card prompt">
+<pre><code>Review the current Daily KPI Note changes as a senior developer.
+
+Report only:
+- correctness issues;
+- validation issues;
+- obvious security risks;
+- missing important tests;
+- unnecessary complexity;
+- documentation mismatches.
+
+For each finding provide:
+- severity;
+- file/location;
+- why it matters;
+- recommendation.
+
+Do not modify anything.</code></pre>
+</div>
+<div class="card check">
+<h3>Responsible-AI checkpoint</h3>
+<p>For every Copilot finding, ask:</p>
+<ol>
+<li>Is the finding actually correct?</li>
+<li>Can I verify it from the code?</li>
+<li>Is it important enough to act on?</li>
+<li>Could Copilot itself have misunderstood the context?</li>
+</ol>
+</div>
+</section>
+
+<section id="lab-pr" class="anchor">
+<h2>Step 7 — Git, Pull Request and Collaboration</h2>
+<div class="connection">
+<div class="learn"><b>Connects to:</b><br>Module 5 — Environments + Module 10 — Enterprise concepts.</div>
+<div class="do"><b>Goal:</b><br>Move from local development into collaborative development.</div>
+</div>
+<div class="card prompt">
+<h3>Commit message</h3>
+<pre><code>Suggest a concise git commit message for the current changes.
+
+Explain why it accurately represents the change.
+Do not commit anything.</code></pre>
+</div>
+<div class="card prompt">
+<h3>PR description</h3>
+<pre><code>Using the current git diff, prepare a concise pull request description.
+
+Include:
+- business purpose;
+- files changed;
+- behaviour changed;
+- tests run;
+- known limitations;
+- review risks.
+
+Use only information present in the current changes.
+Do not invent evidence.</code></pre>
+</div>
+<div class="card">
+<h3>On GitHub</h3>
+<ol>
+<li>Push the branch.</li>
+<li>Open the pull request.</li>
+<li>Review the generated summary.</li>
+<li>Open the changed files.</li>
+<li>Use Copilot to explain important diffs.</li>
+<li>Review CI/test evidence.</li>
+<li>Make the final human decision.</li>
+</ol>
+</div>
+</section>
+
+<section id="lab-upgrade" class="anchor">
+<h2>Step 8 — Change the Requirement Mid-Project</h2>
+<div class="connection">
+<div class="learn"><b>Connects to:</b><br>Prompt Engineering + Agents + Testing + Documentation + SDLC.</div>
+<div class="do"><b>New requirement:</b><br>Add a “Clear All KPIs” feature without breaking existing functionality.</div>
+</div>
+<div class="card prompt">
+<pre><code>Add a “Clear All KPIs” feature.
+
+Constraints:
+- keep the existing UI style;
+- ask for confirmation before deletion;
+- keep current API behaviour unless necessary;
+- add unit tests;
+- update README;
+- do not break existing functionality.
+
+Before changing code:
+1. identify affected files;
+2. propose the smallest implementation plan;
+3. identify tests that need to be added or updated.
+
+Do not implement yet.</code></pre>
+</div>
+<div class="card">
+<h3>Now let Copilot implement the approved plan</h3>
+<pre><code>Implement only the approved Clear All KPIs plan.
+
+After implementation:
+- summarize changed files;
+- explain the data flow;
+- identify tests to run;
+- identify documentation changes;
+- do not claim success until verification is complete.</code></pre>
+</div>
+<div class="card check">
+<h3>Repeat the lifecycle</h3>
+<div class="flow"><span>Implement</span><b>→</b><span>Test</span><b>→</b><span>Fix</span><b>→</b><span>Document</span><b>→</b><span>Review</span><b>→</b><span>PR</span></div>
+<p>This repetition is intentional. It demonstrates that Copilot skills are reusable rather than one-off prompts.</p>
+</div>
+</section>
+
+<section id="lab-finish" class="anchor">
+<h2>Step 9 — Optional Persistence Upgrade</h2>
+<div class="connection">
+<div class="learn"><b>Connects to:</b><br>Planning, context, architecture, testing and documentation.</div>
+<div class="do"><b>Upgrade:</b><br>Move from in-memory storage to PostgreSQL.</div>
+</div>
+<div class="card prompt">
+<pre><code>The application currently stores KPIs in memory.
+
+I have PostgreSQL running locally.
+
+Do not change code yet.
+
+Identify:
+1. where persistence currently happens;
+2. the smallest PostgreSQL change;
+3. proposed table schema;
+4. required environment variables;
+5. tests that must change;
+6. security considerations for connection strings.
+
+Keep the existing UI and API routes unchanged.
+
+Return a short implementation plan only.</code></pre>
+</div>
+<div class="card check">
+<p>After implementation, prove persistence by:</p>
+<ol>
+<li>creating a KPI;</li>
+<li>stopping the application;</li>
+<li>starting it again;</li>
+<li>confirming the KPI still exists;</li>
+<li>running the complete test suite.</li>
+</ol>
+</div>
+</section>
+
+<section>
+<h2>The Lab's Final Connection Map</h2>
+<table>
+<tr><th>GH-300 concept</th><th>Where the learner used it</th><th>Evidence</th></tr>
+<tr><td>Responsible AI</td><td>Review and verification</td><td>Human validation checklist</td></tr>
+<tr><td>Copilot basics</td><td>Initial setup and ghost text</td><td>Working code suggestion</td></tr>
+<tr><td>Prompt engineering</td><td>Every planning/build/test prompt</td><td>Context + constraints + output</td></tr>
+<tr><td>Advanced features</td><td>Chat, Inline Chat, slash commands, agents</td><td>Different tasks completed with different surfaces</td></tr>
+<tr><td>IDE / environments</td><td>Local development + GitHub + CLI</td><td>Repository and workflow</td></tr>
+<tr><td>Testing</td><td>Generated, failed, fixed and rerun tests</td><td>Passing test suite</td></tr>
+<tr><td>Developer use cases</td><td>Build → test → debug → docs → review</td><td>Completed application lifecycle</td></tr>
+<tr><td>Management</td><td>Governance discussion</td><td>Privacy/security/policy decisions</td></tr>
+<tr><td>Documentation</td><td>README maintenance</td><td>README matches code</td></tr>
+<tr><td>Collaboration</td><td>Commit + PR</td><td>Pull request with evidence</td></tr>
+</table>
+</section>
+</main>
+</div>
+
+<div id="prompts" class="panel">
+<div class="subnav">
+<a href="#p-plan">Plan</a><a href="#p-build">Build</a><a href="#p-context">Context</a><a href="#p-test">Test</a><a href="#p-fix">Fix</a><a href="#p-doc">Docs</a><a href="#p-review">Review</a><a href="#p-pr">PR</a>
+</div>
+<main>
+<section id="p-plan" class="anchor"><h2>Prompt Library — Planning</h2>
+<div class="card prompt"><pre><code>Before writing code, explain what information you need,
+what assumptions you would make, and the smallest useful
+implementation for this requirement.
+
+Do not create files yet.</code></pre></div></section>
+<section id="p-build" class="anchor"><h2>Prompt Library — Build</h2>
+<div class="card prompt"><pre><code>Implement the approved plan.
+
+Do not add functionality outside the requirements.
+After implementation, summarize changed files,
+assumptions and what I should manually verify.</code></pre></div></section>
+<section id="p-context" class="anchor"><h2>Prompt Library — Context</h2>
+<div class="card prompt"><pre><code>Use the current project context.
+
+Identify where this behaviour is implemented,
+how it is called, and what edge cases I should test.
+
+Do not modify anything.</code></pre></div></section>
+<section id="p-test" class="anchor"><h2>Prompt Library — Testing</h2>
+<div class="card prompt"><pre><code>Identify the most important unit-test cases for this behaviour.
+Include normal, boundary, invalid and regression cases.
+
+Do not write tests yet.</code></pre></div></section>
+<section id="p-fix" class="anchor"><h2>Prompt Library — Fixing</h2>
+<div class="card prompt"><pre><code>The test is failing.
+
+Do not change code yet.
+Explain expected result, actual result, likely root cause,
+smallest safe fix and regression risk.</code></pre></div></section>
+<section id="p-doc" class="anchor"><h2>Prompt Library — Documentation</h2>
+<div class="card prompt"><pre><code>Update the README using the current project as the source of truth.
+Do not invent features.
+If documentation conflicts with code, identify the conflict first.</code></pre></div></section>
+<section id="p-review" class="anchor"><h2>Prompt Library — Review</h2>
+<div class="card prompt"><pre><code>Review the current changes as a senior developer.
+
+Report correctness, validation, security, missing tests,
+complexity and documentation issues.
+
+For every finding include severity, location,
+why it matters and recommendation.
+
+Do not modify anything.</code></pre></div></section>
+<section id="p-pr" class="anchor"><h2>Prompt Library — Pull Request</h2>
+<div class="card prompt"><pre><code>Using the current diff, prepare a concise PR description.
+
+Include business purpose, files changed, behaviour,
+tests run, limitations and risks.
+
+Use only evidence present in the changes.</code></pre></div></section>
+<div class="card warn"><b>Remember:</b> These are reusable patterns, not magic commands. The learner should modify the context and constraints to match the real project.</div>
+</main>
+</div>
+
+<div id="reference" class="panel">
+<div class="subnav">
+<a href="#r-paths">Learning Paths</a><a href="#r-modules">Modules</a><a href="#r-cert">Certification</a><a href="#r-note">Publication Note</a>
+</div>
+<main>
+<section id="r-paths" class="anchor">
+<h2>Official Microsoft Learn</h2>
+<div class="card">
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/training/paths/copilot/" target="_blank" rel="noopener">GitHub Copilot Fundamentals Part 1 of 2</a></li>
+<li><a href="https://learn.microsoft.com/en-us/training/paths/gh-copilot-2/" target="_blank" rel="noopener">GitHub Copilot Fundamentals Part 2 of 2</a></li>
+<li><a href="https://learn.microsoft.com/en-us/credentials/certifications/github-copilot/" target="_blank" rel="noopener">GitHub Copilot Certification</a></li>
+<li><a href="https://learn.microsoft.com/en-us/credentials/certifications/github-copilot/practice/assessment" target="_blank" rel="noopener">GH-300 Practice Assessment</a></li>
+</ul>
+</div>
+</section>
+<section id="r-modules" class="anchor">
+<h2>Official Module Links</h2>
+<table>
+<tr><th>Topic</th><th>Microsoft Learn</th></tr>
+<tr><td>Responsible AI</td><td><a href="https://learn.microsoft.com/en-us/training/modules/responsible-ai-with-github-copilot/" target="_blank">Responsible AI with GitHub Copilot</a></td></tr>
+<tr><td>Introduction</td><td><a href="https://learn.microsoft.com/en-us/training/modules/introduction-to-github-copilot/" target="_blank">Introduction to GitHub Copilot</a></td></tr>
+<tr><td>Prompt engineering</td><td><a href="https://learn.microsoft.com/en-us/training/modules/introduction-prompt-engineering-with-github-copilot/" target="_blank">Introduction to prompt engineering</a></td></tr>
+<tr><td>Advanced features</td><td><a href="https://learn.microsoft.com/en-us/training/modules/advanced-github-copilot/" target="_blank">Advanced GitHub Copilot features</a></td></tr>
+<tr><td>Python</td><td><a href="https://learn.microsoft.com/en-us/training/modules/introduction-copilot-python/" target="_blank">Using GitHub Copilot with Python</a></td></tr>
+<tr><td>JavaScript</td><td><a href="https://learn.microsoft.com/en-us/training/modules/introduction-copilot-javascript/" target="_blank">Using GitHub Copilot with JavaScript</a></td></tr>
+</table>
+</section>
+<section id="r-cert" class="anchor">
+<h2>Certification Context</h2>
+<div class="card info">
+<p>Use the official Microsoft Learn certification page and practice assessment as the authoritative reference for current certification information. Product features, plan names, module ordering and UI can evolve.</p>
+</div>
+</section>
+<section id="r-note" class="anchor">
+<h2>Public Learning Resource Note</h2>
+<div class="card">
+<p>This is an independent learning resource created by Raushan Ranjan and RR Skillverse. It is designed to complement, not replace, Microsoft Learn.</p>
+<p>It does not reproduce Microsoft course slides, transcripts, assessment questions or certification exam content. Official Microsoft Learn links are provided so readers can access the current authoritative material.</p>
+</div>
+</section>
+</main>
+</div>
+
+<footer>
+<h3>RR Skillverse Notes by Raushan Ranjan (MCT)</h3>
+<p><b>Written by Raushan Ranjan and RR Skillverse</b></p>
+<p>Free learning blogs and tools · Practical developer notes · Hands-on learning resources</p>
+<p>This is an independent educational resource. It is not an official Microsoft publication, certification exam dump, or replacement for Microsoft Learn.</p>
+<p>GitHub, GitHub Copilot and Microsoft Learn are trademarks of their respective owners.</p>
+<p><a href="https://rrskillverse.in/" target="_blank">RR Skillverse</a> · <a href="https://github.com/raushan1107" target="_blank">GitHub</a> · <a href="https://learn.microsoft.com/" target="_blank">Microsoft Learn</a></p>
+</footer>
+
+<script>
+function showTab(id,btn){
+ document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+ document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ btn.classList.add('active');
+ window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
